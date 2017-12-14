@@ -1,1 +1,2 @@
 # LaboratorioInventario
+Esta es una aplicacion creada en Android Studio para el manejo del inventario de los laboratorios que hay en la escuela. Se usa una base de datos MySQL, php y java para hacer el manejo de los datos y poder llevar el inventario de una manera correecta. 
