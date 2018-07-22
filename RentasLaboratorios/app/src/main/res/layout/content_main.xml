@@ -1,57 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-<TextView
-    android:id="@+id/scan_format"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="¿Que quieres hacer?"
-    android:textIsSelectable="true" />
-
-<Button
-    android:id="@+id/rentar"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:text="@string/Rentar" />
-<Button
-    android:id="@+id/consultar"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:text="@string/Consultar" />
-
-    <Button
-        android:id="@+id/nuevoUsuario"
+    <TextView
+        android:id="@+id/scan_format"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Crear Usuario" />
-    <Button
-        android:id="@+id/devolver"
+        android:text="¿Que quieres hacer?"
+        android:textIsSelectable="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/consultar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:text="@string/Consultar" />
+
+        <Button
+            android:id="@+id/rentar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:text="@string/Rentar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/devolver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:text="devolver" />
+
+            <Button
+                android:id="@+id/nuevoUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Crear Usuario" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/agregar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="agregar producto" />
+            <Button
+                android:id="@+id/verProducto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Inventario" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/scan_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/scan_format"
         android:layout_centerHorizontal="true"
-        android:text="devolver" />
-    <Button
-        android:id="@+id/agregar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="agregar producto" />
-
-
-<TextView
-    android:id="@+id/scan_content"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/scan_format"
-    android:layout_centerHorizontal="true"
-    android:textIsSelectable="true" />
+        android:textIsSelectable="true" />
 
 </LinearLayout>
 

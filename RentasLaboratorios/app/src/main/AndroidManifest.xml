@@ -44,6 +44,10 @@
         <activity
             android:name=".AgregarProducto"
             android:label="@string/title_activity_agregar_producto"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GetProductos"
+            android:label="@string/title_activity_get_productos"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

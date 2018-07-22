@@ -18,11 +18,26 @@
         android:inputType="textPersonName" />
 
     <EditText
+        android:id="@+id/apellido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="apellido"
+        android:inputType="textPersonName" />
+
+    <EditText
         android:id="@+id/matricula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Matricula"
+        android:inputType="textPersonName" />
+    <EditText
+        android:id="@+id/carrera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="carrera"
         android:inputType="textPersonName" />
     <Button
         android:id="@+id/crear"

@@ -21,7 +21,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    Button renta, consulta, nuevo, devolver, agregar;
+    Button renta, consulta, nuevo, devolver, agregar, verProducto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +33,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         consulta = (Button)findViewById(R.id.consultar);
         nuevo = (Button) findViewById(R.id.nuevoUsuario);
         devolver = (Button) findViewById(R.id.devolver);
+        verProducto = (Button) findViewById(R.id.verProducto);
 
+        verProducto.setOnClickListener(this);
         renta.setOnClickListener(this);
         consulta.setOnClickListener(this);
         nuevo.setOnClickListener(this);
@@ -85,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if(v.getId() == R.id.agregar){
             Intent i = new Intent(this, AgregarProducto.class);
+            startActivity(i);
+        }
+        if(v.getId() == R.id.verProducto){
+            Intent i = new Intent(this, GetProductos.class);
             startActivity(i);
         }
     }

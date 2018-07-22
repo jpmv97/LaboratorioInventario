@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -38,6 +40,8 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
     private EditText matricula, codigo;
     private Button scan, terminar, agregar;
     List<String> list = new ArrayList<String>();
+    List<Integer> cantidades = new ArrayList<Integer>();
+    List<String> listNumbers = new ArrayList<String>();
     ListView listview;
     SetData setData;
     @Override
@@ -68,13 +72,28 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
         }
         if(view.getId()==R.id.rentar){
            setData = new SetData();
-           setData.execute("http://192.168.0.15/SetRenta.php");
+           setData.execute("http://192.168.0.17/Back/SetRenta.php");
         }
         if(view.getId() == R.id.agregar){
-            list.add(codigo.getText().toString());
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list);
-            listview.setAdapter(adapter);
-            codigo.setText("");
+            if (!codigo.getText().toString().isEmpty()) {
+                if(list.size()== 0){
+                    list.add(codigo.getText().toString());
+                    cantidades.add(1);
+                }
+                for(String str: list){
+                    if(str.trim().contains(codigo.getText())){
+                        int index = list.indexOf((codigo.getText().toString()));
+                        int cantidadActual = cantidades.get(index);
+                        cantidades.set(index, cantidadActual+1);
+                    }else{
+                        list.add(codigo.getText().toString());
+                        cantidades.add(1);
+                    }
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list);
+                listview.setAdapter(adapter);
+                codigo.setText("");
+            }
         }
     }
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -106,7 +125,7 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
         protected void onPostExecute(Boolean result) {
 
             super.onPostExecute(result);
-            if (result == true) {
+            if (result) {
                 Toast.makeText(Rentar.this, "Registro insertado",
 
                         Toast.LENGTH_LONG).show();
@@ -127,11 +146,12 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
             }
             for(int i = 0; i < list.size(); i++){
                 String producto = list.get(i);
+                Integer numero = cantidades.get(i);
                 InputStream inputStream = null;
                 String params =
                         "matricula=" + matricula.getText().toString() +
                                 "&producto=" + producto +
-                                "&cantidad=" + 1;
+                                "&cantidad=" + numero;
 
 
                 for (String url1 : urls) {

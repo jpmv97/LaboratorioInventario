@@ -11,5 +11,6 @@
     <string name="title_activity_devolver">Devolver</string>
     <string name="title_activity_devolver_productos">DevolverProductos</string>
     <string name="title_activity_agregar_producto">AgregarProducto</string>
+    <string name="title_activity_get_productos">GetProductos</string>
 
 </resources>

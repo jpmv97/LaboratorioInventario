@@ -30,7 +30,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Consultar extends AppCompatActivity {
+public class GetProductos extends AppCompatActivity {
 
     ListView listView;
 
@@ -41,30 +41,30 @@ public class Consultar extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listview);
         GetDataRentas gdr = new GetDataRentas();
-        gdr.execute("http://192.168.0.17/Back/GetRentas.php");
+        gdr.execute("http://192.168.0.17/Back/GetProducto.php");
         Log.e("ENCUENTRALO", "ERROR");
 
 
 
     }
     private class GetDataRentas extends AsyncTask<String, Void, Boolean> {
-        ProgressDialog dialog = new ProgressDialog(Consultar.this);
+        ProgressDialog dialog = new ProgressDialog(GetProductos.this);
         String contenido = "";
 
         protected void onPostExecute(Boolean result) {
             if (result == true) {
                 try {
-                    Toast toast = Toast.makeText(Consultar.this,
+                    Toast toast = Toast.makeText(GetProductos.this,
                             "Post", Toast.LENGTH_SHORT);
                     toast.show();
                     ArrayList<String> lista = new ArrayList<String>();
                     JSONArray json = new JSONArray(contenido);
                     for (int i = 0; i < json.length(); i++) {
                         JSONObject jsonData = json.getJSONObject(i);
-                        lista.add("fecha renta:" + jsonData.getString("fechaRenta")+", producto:" + jsonData.getString("nombre") + ", cantidad: " +
-                                jsonData.getString("cantidad") + ", nombre: " + jsonData.getString("usuario"));
+                        lista.add("producto:" + jsonData.getString("nombre")+", cantidad:" + jsonData.getString("cantidad") + ", existencia: " +
+                                jsonData.getString("existencia"));
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(Consultar.this,
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(GetProductos.this,
                             android.R.layout.simple_list_item_1, lista);
 
                     listView.setAdapter(adapter);

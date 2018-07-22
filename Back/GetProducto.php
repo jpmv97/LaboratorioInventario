@@ -1,9 +1,9 @@
-<?php
 
+<?php
 $db = new mysqli("localhost", "root", "", "laboratorios");
 $db->set_charset("utf8");
 $datos = array();
-$sql = "SELECT fechaRenta, r.cantidad, p.nombre, u.nombre usuario from renta r, producto p, usuario u where r.fkProducto = p.idProducto and r.fkUsuario = u.idUsuario";
+$sql = "SELECT SELECT nombre, cantidad, existencia from producto";
 	if(!$result = $db->query($sql)){
 		die('{"err":' . $db->error . '}');
 	}else{

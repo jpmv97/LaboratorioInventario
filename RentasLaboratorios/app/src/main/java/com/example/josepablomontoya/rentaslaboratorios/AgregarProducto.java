@@ -42,7 +42,7 @@ public class AgregarProducto extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         if(view.getId() == R.id.agregar){
             SetData sd = new SetData();
-            sd.execute("http://192.168.0.15/AgregarProducto.php");
+            sd.execute("http://192.168.0.17/Back/AgregarProducto.php");
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.josepablomontoya.rentaslaboratorios;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,7 +22,7 @@ import java.util.Scanner;
 
 public class NuevoUsuario extends AppCompatActivity implements View.OnClickListener{
 
-    EditText matricula, nombre;
+    EditText matricula, nombre, apellido, carrera;
     Button crear;
     SetData data;
     @Override
@@ -31,6 +32,9 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
 
         matricula = (EditText) findViewById(R.id.matricula);
         nombre = (EditText) findViewById(R.id.nombre);
+        apellido = (EditText) findViewById(R.id.apellido);
+        carrera = (EditText) findViewById(R.id.carrera);
+
         crear = (Button) findViewById(R.id.crear);
         crear.setOnClickListener(this);
 
@@ -40,7 +44,7 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if(view.getId() == R.id.crear){
             data = new SetData();
-            data.execute("http://192.168.0.15/SetUsuario.php");
+            data.execute("http://192.168.0.17/Back/SetUsuario.php");
         }
     }
 
@@ -62,7 +66,8 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(NuevoUsuario.this, "Registro insertado",
 
                         Toast.LENGTH_LONG).show();
-
+                Intent i = new Intent(NuevoUsuario.this, MainActivity.class);
+                startActivity(i);
             } else {
                 Toast.makeText(NuevoUsuario.this, "Error", Toast.LENGTH_LONG).show();
             }
@@ -76,6 +81,8 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
             String params =
                             "nombre=" + nombre.getText().toString() +
                             "&matricula=" + matricula.getText().toString() +
+                            "&apellido="+apellido.getText().toString()+
+                            "&carrera="+carrera.getText().toString() +
                             "&correo=" + correo;
 
             for (String url1 : urls) {
