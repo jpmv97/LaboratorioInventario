@@ -179,7 +179,7 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
                 String params =
                         "matricula=" + matricula.getText().toString() +
                                 "&producto=" + producto +
-                                "&cantidad=" + numero;
+                                "&cantidad=" + 1;
 
 
                 for (String url1 : urls) {
@@ -207,7 +207,7 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
                         // Convertir inputstream a string
                         contenido = new Scanner(inputStream).useDelimiter("\\A").next();
                         Log.i("CONTENIDO", contenido);
-                        if(contenido.equals("1") || contenido.equals("2") || contenido.equals("2")) {
+                        if(contenido.equals("1") || contenido.equals("2") || contenido.equals("3")) {
                             return false;
                         }
                     } catch (Exception ex) {

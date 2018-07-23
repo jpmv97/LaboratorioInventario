@@ -40,33 +40,30 @@ public class GetProductos extends AppCompatActivity {
         setContentView(R.layout.activity_consultar);
 
         listView = (ListView) findViewById(R.id.listview);
-        GetDataRentas gdr = new GetDataRentas();
+        GetData gdr = new GetData();
         gdr.execute("http://10.49.176.29/Back/GetProducto.php");
-        Log.e("ENCUENTRALO", "ERROR");
-
-
-
     }
-    private class GetDataRentas extends AsyncTask<String, Void, Boolean> {
+
+    private class GetData extends AsyncTask<String, Void, Boolean> {
         ProgressDialog dialog = new ProgressDialog(GetProductos.this);
         String contenido = "";
 
         protected void onPostExecute(Boolean result) {
-            if (result == true) {
+            if (result) {
                 try {
-                    Toast toast = Toast.makeText(GetProductos.this,
-                            "Post", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(GetProductos.this, "Post", Toast.LENGTH_SHORT);
                     toast.show();
                     ArrayList<String> lista = new ArrayList<String>();
                     JSONArray json = new JSONArray(contenido);
+
                     for (int i = 0; i < json.length(); i++) {
                         JSONObject jsonData = json.getJSONObject(i);
+                        Log.i("productos", jsonData.getString("nombre"));
                         lista.add("producto:" + jsonData.getString("nombre")+", cantidad:" + jsonData.getString("cantidad") + ", existencia: " +
                                 jsonData.getString("existencia"));
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(GetProductos.this,
                             android.R.layout.simple_list_item_1, lista);
-
                     listView.setAdapter(adapter);
                 } catch (JSONException e) {
 
