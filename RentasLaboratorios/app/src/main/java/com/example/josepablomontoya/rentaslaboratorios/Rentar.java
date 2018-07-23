@@ -73,10 +73,10 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 AlertDialog.Builder adb=new AlertDialog.Builder(Rentar.this);
-                adb.setTitle("Delete?");
-                adb.setMessage("Are you sure you want to delete " + position);
+                adb.setTitle("Eliminar producto?");
+                adb.setMessage("Estas seguro?" + list.get(position));
                 final int positionToRemove = position;
-                adb.setNegativeButton("Cancel", null);
+                adb.setNegativeButton("Cancelar", null);
                 adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         list.remove(positionToRemove);
