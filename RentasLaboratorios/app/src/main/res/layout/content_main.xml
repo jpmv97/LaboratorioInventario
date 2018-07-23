@@ -10,7 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="¿Que quieres hacer?"
-        android:textIsSelectable="true" />
+        android:textIsSelectable="true"
+        android:textSize="24sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
 
         <Button
             android:id="@+id/consultar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_weight="1"
@@ -26,69 +27,55 @@
 
         <Button
             android:id="@+id/rentar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_weight="1"
             android:text="@string/Rentar" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/devolver"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_weight="1"
-                android:text="devolver" />
-
-            <Button
-                android:id="@+id/nuevoUsuario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Crear Usuario" />
-        </LinearLayout>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <LinearLayout
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/devolver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/agregar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="agregar producto" />
-            <Button
-                android:id="@+id/verProducto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="Inventario" />
-        </LinearLayout>
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:text="devolver" />
+
+        <Button
+            android:id="@+id/nuevoUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Crear Usuario" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/scan_content"
-        android:layout_width="wrap_content"
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/scan_format"
-        android:layout_centerHorizontal="true"
-        android:textIsSelectable="true" />
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/agregar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="agregar producto" />
+        <Button
+            android:id="@+id/verProducto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Inventario" />
+    </LinearLayout>
+
 
 </LinearLayout>
 

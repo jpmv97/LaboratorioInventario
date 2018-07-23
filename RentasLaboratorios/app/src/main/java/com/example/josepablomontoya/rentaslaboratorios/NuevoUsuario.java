@@ -44,12 +44,12 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if(view.getId() == R.id.crear){
             data = new SetData();
-            data.execute("http://192.168.0.17/Back/SetUsuario.php");
+            data.execute("http://10.49.176.29/Back/SetUsuario.php");
         }
     }
 
     private class SetData extends AsyncTask<String, Void, Boolean> {
-
+        String contenido = "";
         ProgressDialog dialog = new ProgressDialog(NuevoUsuario.this);
 
         protected void onPreExecute() {
@@ -69,7 +69,7 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
                 Intent i = new Intent(NuevoUsuario.this, MainActivity.class);
                 startActivity(i);
             } else {
-                Toast.makeText(NuevoUsuario.this, "Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(NuevoUsuario.this, "Usuario ya existe", Toast.LENGTH_LONG).show();
             }
             dialog.dismiss();
 
@@ -105,11 +105,21 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
                     out.close();
                     conn.connect();
                     int response = conn.getResponseCode();
+
+                    inputStream = conn.getInputStream();
+                    contenido = new Scanner(inputStream).useDelimiter("\\A").next();
+                    Log.i("CONTENIDO", contenido);
                     Log.d("SERVIDOR", "La respuesta del servidor es: " + response);
                     inputStream = conn.getInputStream();
+                    if(contenido.equals("error")){
+                        return false;
+                    }
                     // Convertir inputstream a string
                     //String contenido = new Scanner(inputStream).useDelimiter("\\A").next();
                     //Log.i("CONTENIDO", contenido);
+//                    String test = conn.getErrorStream().toString();
+//                    Log.d("SERVIDOR", "El error es: " + test);
+
                 } catch (Exception ex) {
                     Log.e("ERROR", ex.toString());
                     return false;

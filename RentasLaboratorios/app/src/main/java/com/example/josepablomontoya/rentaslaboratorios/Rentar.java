@@ -3,7 +3,9 @@ package com.example.josepablomontoya.rentaslaboratorios;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,7 +15,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,9 +48,11 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
     private Button scan, terminar, agregar;
     List<String> list = new ArrayList<String>();
     List<Integer> cantidades = new ArrayList<Integer>();
-    List<String> listNumbers = new ArrayList<String>();
     ListView listview;
     SetData setData;
+    String contenido;
+    Integer positionItem;
+    ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +67,26 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
         scan.setOnClickListener(this);
         terminar.setOnClickListener(this);
         listview = (ListView) findViewById(R.id.listview);
+        registerForContextMenu(listview);
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list);
 
-        if(!codigo.getText().equals("")){
-        }
-
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                AlertDialog.Builder adb=new AlertDialog.Builder(Rentar.this);
+                adb.setTitle("Delete?");
+                adb.setMessage("Are you sure you want to delete " + position);
+                final int positionToRemove = position;
+                adb.setNegativeButton("Cancel", null);
+                adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        list.remove(positionToRemove);
+                        adapter.notifyDataSetChanged();
+                    }});
+                adb.show();
+            }
+        });
+//                positionItem = position;
+//                Toast.makeText(getApplicationContext(), "Clicked: "+list.get(position), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -72,7 +97,7 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
         }
         if(view.getId()==R.id.rentar){
            setData = new SetData();
-           setData.execute("http://192.168.0.17/Back/SetRenta.php");
+           setData.execute("http://10.49.176.29/Back/SetRenta.php");
         }
         if(view.getId() == R.id.agregar){
             if (!codigo.getText().toString().isEmpty()) {
@@ -90,7 +115,7 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
                         cantidades.add(1);
                     }
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list);
+                adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list);
                 listview.setAdapter(adapter);
                 codigo.setText("");
             }
@@ -126,14 +151,17 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
 
             super.onPostExecute(result);
             if (result) {
-                Toast.makeText(Rentar.this, "Registro insertado",
-
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(Rentar.this, "Registro insertado", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(Rentar.this, MainActivity.class);
                 startActivity(i);
 
             } else {
-                Toast.makeText(Rentar.this, "Error", Toast.LENGTH_LONG).show();
+              if(contenido.equals("1")) {
+                  Toast.makeText(Rentar.this, "Producto inexistente", Toast.LENGTH_LONG).show();
+              }else if(contenido.equals("2")){
+                  Toast.makeText(Rentar.this, "Usuario inexistente", Toast.LENGTH_LONG).show();
+              }else if(contenido.equals("3"))
+                  Toast.makeText(Rentar.this, "Producto insuficiente", Toast.LENGTH_LONG).show();
             }
             dialog.dismiss();
 
@@ -177,8 +205,11 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
                         Log.d("SERVIDOR", "La respuesta del servidor es: " + response);
                         inputStream = conn.getInputStream();
                         // Convertir inputstream a string
-                        //String contenido = new Scanner(inputStream).useDelimiter("\\A").next();
-                        //Log.i("CONTENIDO", contenido);
+                        contenido = new Scanner(inputStream).useDelimiter("\\A").next();
+                        Log.i("CONTENIDO", contenido);
+                        if(contenido.equals("1") || contenido.equals("2") || contenido.equals("2")) {
+                            return false;
+                        }
                     } catch (Exception ex) {
                         Log.e("ERRORES", ex.toString());
                         return false;
@@ -189,89 +220,21 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
             return true;
         }
     }
-
-
-    private class GetDataRentas extends AsyncTask<String, Void, Boolean> {
-        String params = matricula.getText().toString();
-        ProgressDialog dialog = new ProgressDialog(Rentar.this);
-        String contenido = "";
-
-        protected void onPostExecute(Boolean result) {
-            String flag = new String();
-            if (result == true) {
-                try {
-
-                    ArrayList<String> lista = new ArrayList<String>();
-
-
-                    flag = contenido;
-                    Log.e("ERRORES", flag);
-                    if(flag.equals("false")){
-                        Intent i = new Intent(Rentar.this, NuevoUsuario.class);
-                        startActivity(i);
-                    }
-                } catch (Exception e) {
-
-                    Log.e("ERRORES2", e.getMessage() + " == " + e.getCause());
-                }
-
-            }
-            dialog.dismiss();
-        }
-
-        protected void onPreExecute() {
-
-            dialog.setMessage("Leyendo datos de la BD remota");
-            dialog.show();
-
-        }
-
-        protected Boolean doInBackground(String... urls) {
-            Log.i("bakend", "back");
-            InputStream inputStream = null;
-            for (String url1 : urls) {
-                try {
-
-                    URL url = new URL(url1);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setReadTimeout(10000 /* milisegundos */);
-                    conn.setConnectTimeout(150000 /* milisegundos */);
-                    // Método para enviar los datos
-                    conn.setRequestMethod("GET");
-                    // Si se requiere obtener un resultado de la página
-                    // se coloca setDoInput(true);
-                    conn.setDoInput(true);
-                    conn.setDoOutput(true);
-                    OutputStream out = conn.getOutputStream();
-                    out.write(params.getBytes());
-                    out.flush();
-                    out.close();
-                    // Recupera la página
-                    conn.connect();
-                    int response = conn.getResponseCode();
-
-                    Log.d("SERVIDOR", "La respuesta del servidor es: " + response);
-
-                    inputStream = conn.getInputStream();
-                    contenido = new Scanner(inputStream).useDelimiter("\\A").next();
-                    Log.i("CONTENIDO", contenido);
-                } catch (Exception ex) {
-                    Log.e("ERRORES", ex.toString());
-                    return false;
-                } finally {
-                    if (inputStream != null) {
-                        try {
-                            inputStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-            return true;
-        }
-    }
-
-
-
+//    @Override
+//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+//        menu.add(0, v.getId(), 0, "Delete");
+//    }
+//
+//    @Override
+//    public boolean onContextItemSelected(MenuItem item){
+//        if(item.getTitle()=="Delete"){
+//            String x = list.get(positionItem);
+//            list.remove(positionItem);
+//            Toast.makeText(Rentar.this, x, Toast.LENGTH_SHORT).show();
+//            listview.invalidateViews();
+//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list);
+//            listview.setAdapter(adapter);
+//        }
+//        return true;
+//    }
 }

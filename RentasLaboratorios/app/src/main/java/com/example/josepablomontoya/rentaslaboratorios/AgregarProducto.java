@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Scanner;
 import java.util.Set;
 
 public class AgregarProducto extends AppCompatActivity implements View.OnClickListener{
@@ -42,7 +43,7 @@ public class AgregarProducto extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         if(view.getId() == R.id.agregar){
             SetData sd = new SetData();
-            sd.execute("http://192.168.0.17/Back/AgregarProducto.php");
+            sd.execute("http://10.49.176.29/Back/AgregarProducto.php");
         }
     }
 
@@ -66,7 +67,9 @@ public class AgregarProducto extends AppCompatActivity implements View.OnClickLi
                 startActivity(i);
 
             } else {
-                Toast.makeText(AgregarProducto.this, "Error", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(AgregarProducto.this, MainActivity.class);
+                startActivity(i);
+                Toast.makeText(AgregarProducto.this, "El producto ya existe", Toast.LENGTH_LONG).show();
             }
             // dialog.dismiss();
 
@@ -102,9 +105,12 @@ public class AgregarProducto extends AppCompatActivity implements View.OnClickLi
                     int response = conn.getResponseCode();
                     Log.d("SERVIDOR", "La respuesta del servidor es: " + response);
                     inputStream = conn.getInputStream();
-                    // Convertir inputstream a string
-                    //String contenido = new Scanner(inputStream).useDelimiter("\\A").next();
-                    //Log.i("CONTENIDO", contenido);
+                     //Convertir inputstream a string
+                    String contenido = new Scanner(inputStream).useDelimiter("\\A").next();
+                    Log.i("CONTENIDO", contenido);
+                    if(contenido.equals("producto ya existe")){
+                        return false;
+                    }
                 } catch (Exception ex) {
                     Log.e("ERROR", ex.toString());
                     return false;
