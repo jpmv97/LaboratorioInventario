@@ -41,11 +41,7 @@ public class Consultar extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listview);
         GetDataRentas gdr = new GetDataRentas();
-        gdr.execute("http://10.49.176.29/Back/GetRentas.php");
-        Log.e("ENCUENTRALO", "ERROR");
-
-
-
+        gdr.execute("http://192.168.0.12/Back/GetRentas.php");
     }
     private class GetDataRentas extends AsyncTask<String, Void, Boolean> {
         ProgressDialog dialog = new ProgressDialog(Consultar.this);

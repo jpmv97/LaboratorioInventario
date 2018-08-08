@@ -46,7 +46,7 @@ public class DevolverProductos extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         if(view.getId() == R.id.devolver){
             SetData sd = new SetData();
-            sd.execute("http://10.49.176.29/Back/Devolver.php");
+            sd.execute("http://192.168.0.12/Back/Devolver.php");
         }
         if(view.getId()==R.id.scan){
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);

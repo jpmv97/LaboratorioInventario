@@ -53,13 +53,14 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
     String contenido;
     Integer positionItem;
     ArrayAdapter<String> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rentar);
 
-        terminar = (Button)findViewById(R.id.rentar);
-        scan = (Button)findViewById(R.id.scan);
+        terminar = (Button) findViewById(R.id.rentar);
+        scan = (Button) findViewById(R.id.scan);
         matricula = (EditText) findViewById(R.id.matricula);
         codigo = (EditText) findViewById(R.id.codigo);
         agregar = (Button) findViewById(R.id.agregar);
@@ -68,11 +69,11 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
         terminar.setOnClickListener(this);
         listview = (ListView) findViewById(R.id.listview);
         registerForContextMenu(listview);
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                AlertDialog.Builder adb=new AlertDialog.Builder(Rentar.this);
+                AlertDialog.Builder adb = new AlertDialog.Builder(Rentar.this);
                 adb.setTitle("Eliminar producto?");
                 adb.setMessage("Estas seguro?" + list.get(position));
                 final int positionToRemove = position;
@@ -81,7 +82,8 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
                     public void onClick(DialogInterface dialog, int which) {
                         list.remove(positionToRemove);
                         adapter.notifyDataSetChanged();
-                    }});
+                    }
+                });
                 adb.show();
             }
         });
@@ -91,45 +93,46 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==R.id.scan){
+        if (view.getId() == R.id.scan) {
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
         }
-        if(view.getId()==R.id.rentar){
-           setData = new SetData();
-           setData.execute("http://10.49.176.29/Back/SetRenta.php");
+        if (view.getId() == R.id.rentar) {
+            setData = new SetData();
+            setData.execute("http://192.168.0.12/Back/SetRenta.php");
         }
-        if(view.getId() == R.id.agregar){
+        if (view.getId() == R.id.agregar) {
             if (!codigo.getText().toString().isEmpty()) {
-                if(list.size()== 0){
+                if (list.size() == 0) {
                     list.add(codigo.getText().toString());
                     cantidades.add(1);
                 }
-                for(String str: list){
-                    if(str.trim().contains(codigo.getText())){
+                for (String str : list) {
+                    if (str.trim().contains(codigo.getText())) {
                         int index = list.indexOf((codigo.getText().toString()));
                         int cantidadActual = cantidades.get(index);
-                        cantidades.set(index, cantidadActual+1);
-                    }else{
+                        cantidades.set(index, cantidadActual + 1);
+                    } else {
                         list.add(codigo.getText().toString());
                         cantidades.add(1);
                     }
                 }
-                adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list);
+                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
                 listview.setAdapter(adapter);
                 codigo.setText("");
             }
         }
     }
+
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
             String scanContent = scanningResult.getContents();
             list.add(scanContent);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
             listview.setAdapter(adapter);
             //codigo.setText(scanContent);
-        }else{
+        } else {
             Toast toast = Toast.makeText(getApplicationContext(),
                     "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
@@ -156,12 +159,12 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
                 startActivity(i);
 
             } else {
-              if(contenido.equals("1")) {
-                  Toast.makeText(Rentar.this, "Producto inexistente", Toast.LENGTH_LONG).show();
-              }else if(contenido.equals("2")){
-                  Toast.makeText(Rentar.this, "Usuario inexistente", Toast.LENGTH_LONG).show();
-              }else if(contenido.equals("3"))
-                  Toast.makeText(Rentar.this, "Producto insuficiente", Toast.LENGTH_LONG).show();
+                if (contenido.equals("1")) {
+                    Toast.makeText(Rentar.this, "Producto inexistente", Toast.LENGTH_LONG).show();
+                } else if (contenido.equals("2")) {
+                    Toast.makeText(Rentar.this, "Usuario inexistente", Toast.LENGTH_LONG).show();
+                } else if (contenido.equals("3"))
+                    Toast.makeText(Rentar.this, "Producto insuficiente", Toast.LENGTH_LONG).show();
             }
             dialog.dismiss();
 
@@ -169,10 +172,10 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
 
         protected Boolean doInBackground(String... urls) {
             int cantidad = 0;
-            for(String s : list){
+            for (String s : list) {
                 cantidad = Collections.frequency(list, s);
             }
-            for(int i = 0; i < list.size(); i++){
+            for (int i = 0; i < list.size(); i++) {
                 String producto = list.get(i);
                 Integer numero = cantidades.get(i);
                 InputStream inputStream = null;
@@ -207,7 +210,7 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
                         // Convertir inputstream a string
                         contenido = new Scanner(inputStream).useDelimiter("\\A").next();
                         Log.i("CONTENIDO", contenido);
-                        if(contenido.equals("1") || contenido.equals("2") || contenido.equals("3")) {
+                        if (contenido.equals("1") || contenido.equals("2") || contenido.equals("3")) {
                             return false;
                         }
                     } catch (Exception ex) {
@@ -220,6 +223,9 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
             return true;
         }
     }
+}
+
+
 //    @Override
 //    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 //        menu.add(0, v.getId(), 0, "Delete");
@@ -237,4 +243,4 @@ public class Rentar extends AppCompatActivity implements View.OnClickListener {
 //        }
 //        return true;
 //    }
-}
+

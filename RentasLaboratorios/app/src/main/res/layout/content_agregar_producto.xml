@@ -17,21 +17,6 @@
         android:hint="nombre"
         android:inputType="textPersonName"/>
 
-    <EditText
-        android:id="@+id/descripcion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="descripcion"
-        android:inputType="textPersonName"/>
-
-    <EditText
-        android:id="@+id/cantidad"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="cantidad"
-        android:inputType="textPersonName"/>
 
     <EditText
         android:id="@+id/codigo"

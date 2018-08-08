@@ -44,7 +44,7 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if(view.getId() == R.id.crear){
             data = new SetData();
-            data.execute("http://10.49.176.29/Back/SetUsuario.php");
+            data.execute("http://192.168.0.12/Back/SetUsuario.php");
         }
     }
 

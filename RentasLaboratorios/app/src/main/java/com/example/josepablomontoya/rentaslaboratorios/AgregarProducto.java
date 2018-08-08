@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class AgregarProducto extends AppCompatActivity implements View.OnClickListener{
 
-    EditText nombre, descripcion, cantidad, codigo;
+    EditText nombre, codigo;
     Button agregar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +31,6 @@ public class AgregarProducto extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_agregar_producto);
 
         nombre = (EditText)findViewById(R.id.nombre);
-        descripcion = (EditText)findViewById(R.id.descripcion);
-        cantidad = (EditText)findViewById(R.id.cantidad);
         codigo = (EditText)findViewById(R.id.codigo);
 
         agregar = (Button) findViewById(R.id.agregar);
@@ -43,7 +41,7 @@ public class AgregarProducto extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         if(view.getId() == R.id.agregar){
             SetData sd = new SetData();
-            sd.execute("http://10.49.176.29/Back/AgregarProducto.php");
+            sd.execute("http://192.168.0.12/Back/AgregarProducto.php");
         }
     }
 
@@ -79,8 +77,6 @@ public class AgregarProducto extends AppCompatActivity implements View.OnClickLi
             InputStream inputStream = null;
             String params =
                     "nombre=" + nombre.getText().toString() +
-                            "&descripcion=" + descripcion.getText().toString() +
-                            "&cantidad=" + cantidad.getText().toString()+
                             "&codigo=" + codigo.getText().toString();
 
             for (String url1 : urls) {

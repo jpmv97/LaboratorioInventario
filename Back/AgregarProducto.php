@@ -13,12 +13,10 @@ echo json_encode($datos);
 	$db = new mysqli("localhost", "root", "", "laboratorios");
 	$db->set_charset("utf8");
 	$nombre = $_REQUEST['nombre'];
-	$descripcion = $_REQUEST['descripcion'];
-	$cantidad = $_REQUEST['cantidad'];
 	$codigo = $_REQUEST['codigo'];
 	if(isset($nombre, $descripcion, $cantidad, $codigo)){
 		$datos = array();
-		$sql = "INSERT INTO producto VALUES(null, '$nombre', '$descripcion', '$cantidad', $codigo)";
+		$sql = "INSERT INTO producto VALUES(null, '$nombre', $codigo)";
 		if(!$result = $db->query($sql)){
 			die('{"err":' . $db->error . '}');
 		}else{

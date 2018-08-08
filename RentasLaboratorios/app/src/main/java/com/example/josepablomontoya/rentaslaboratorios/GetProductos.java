@@ -41,7 +41,7 @@ public class GetProductos extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listview);
         GetData gdr = new GetData();
-        gdr.execute("http://10.49.176.29/Back/GetProducto.php");
+        gdr.execute("http://192.168.0.12/Back/GetProducto.php");
     }
 
     private class GetData extends AsyncTask<String, Void, Boolean> {
