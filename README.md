@@ -19,3 +19,5 @@ Devolver:
 
 Agregar producto:
 	En esta seccion se agrega un producto nuevo a la base de datos. 
+Inventario:
+	En esta ventana se puede ver todos los productos que hay en el inventario
