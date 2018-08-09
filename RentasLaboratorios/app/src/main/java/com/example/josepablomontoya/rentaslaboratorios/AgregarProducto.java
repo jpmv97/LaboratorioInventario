@@ -53,13 +53,12 @@ public class AgregarProducto extends AppCompatActivity implements View.OnClickLi
             super.onPreExecute();
             dialog.setMessage("Almacenando datos...");
             dialog.show();
-
         }
 
         protected void onPostExecute(Boolean result) {
 
             super.onPostExecute(result);
-            if (result == true) {
+            if (result) {
                 Toast.makeText(AgregarProducto.this, "Producto Agregado", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(AgregarProducto.this, MainActivity.class);
                 startActivity(i);
@@ -77,7 +76,7 @@ public class AgregarProducto extends AppCompatActivity implements View.OnClickLi
             InputStream inputStream = null;
             String params =
                     "nombre=" + nombre.getText().toString() +
-                            "&codigo=" + codigo.getText().toString();
+                    "&codigo=" + codigo.getText().toString();
 
             for (String url1 : urls) {
                 try {
